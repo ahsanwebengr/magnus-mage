@@ -48,7 +48,7 @@ const OTPInput = () => {
     };
 
     return (
-        <div className="grid grid-cols-6 gap-4 w-full" onPaste={(e) => handlePaste(e)}>
+        <div className="grid grid-cols-6 gap-4 w-full mb-6" onPaste={(e) => handlePaste(e)}>
             {otp.map((digit, index) => (
                 <input
                     key={index}

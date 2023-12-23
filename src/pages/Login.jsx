@@ -4,6 +4,7 @@ import { emailIcon } from '../assets';
 import { passwordIcon } from '../assets';
 import { Link } from "react-router-dom";
 import Button from "../components/Button";
+import Heading from "../components/Heading";
 
 
 const Login = () => {
@@ -21,7 +22,7 @@ const Login = () => {
         <Welcome />
         {/* Login Form  */}
         <form className="h-full mx-auto flex items-center justify-center flex-col w-full max-w-96 px-3 lg:p-0">
-          <h4 className='text-lg lg:text-2xl font-bold mb-16 text-center capitalize'>Welcome Back</h4>
+          <Heading text={'Welcome Back'} style={'mb-16'} />
           <InputField placeholder='Email' type='email' onChange={handleChange} fieldIcon={emailIcon} />
           <InputField placeholder='Password' type='password' onChange={handleChange} fieldIcon={passwordIcon} />
 

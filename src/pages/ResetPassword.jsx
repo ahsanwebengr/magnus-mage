@@ -3,6 +3,7 @@ import Button from "../components/Button";
 import InputField from "../components/InputField";
 import Welcome from "../components/Welcome";
 import { passwordIcon } from "../assets";
+import Heading from "../components/Heading";
 
 const ResetPassword = () => {
     return (
@@ -12,7 +13,7 @@ const ResetPassword = () => {
                 <Welcome />
                 {/* Login Form  */}
                 <form className="h-full mx-auto flex items-center justify-center flex-col w-full max-w-96 px-3 lg:p-0">
-                    <h4 className='text-lg lg:text-2xl font-bold mb-16 text-center capitalize'>Forget password</h4>
+                    <Heading text={'Forget password'} style={'mb-1  6'} />
                     <InputField placeholder='New Password' type='password' fieldIcon={passwordIcon} />
                     <InputField placeholder='Confirm Password' type='password' fieldIcon={passwordIcon} />
 

@@ -4,6 +4,7 @@ import InputField from '../components/InputField';
 import Button from '../components/Button';
 import { emailIcon, passwordIcon, userIcon, globalIcon } from '../assets';
 import { Link } from 'react-router-dom';
+import Heading from '../components/Heading';
 
 const Register = () => {
   return (
@@ -14,7 +15,7 @@ const Register = () => {
           <Welcome />
           {/* Login Form  */}
           <form className="h-full mx-auto flex items-center justify-center flex-col w-full max-w-96 px-3 lg:p-0">
-            <h4 className='text-lg lg:text-2xl font-bold mb-16 text-center capitalize'>create account</h4>
+            <Heading text={'create account'} style={'mb-16'} />
             <InputField placeholder='Name' type='text' fieldIcon={userIcon} />
             <InputField placeholder='Email' type='email' fieldIcon={emailIcon} />
             <InputField placeholder='Password' type='password' fieldIcon={passwordIcon} />
@@ -39,7 +40,7 @@ const Register = () => {
             <div className="w-full mb-6 mt-2 text-center">
               <span className=" text-primary-color or-line">Or</span>
             </div>
-            <p className="font-normal text-md text-primary-color">Have no account yet? <Link to={'/'} className="text-primary-light font-semibold hover:underline">Login</Link> </p>
+            <p className="font-normal text-md text-primary-color">Have an account yet? <Link to={'/'} className="text-primary-light font-semibold hover:underline">Login</Link> </p>
           </form>
         </div>
       </section>
