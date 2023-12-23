@@ -3,7 +3,7 @@ import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 
 const InputField = (props) => {
   const [isPassShow, setIsPassShow] = useState(false);
-  const { type, onChange, placeholder, styling, fieldIcon, value } = props;
+  const { type, onChange, placeholder, styling, fieldIcon, value, name } = props;
 
 
   const handleShowPass = () => {
@@ -20,6 +20,7 @@ const InputField = (props) => {
         placeholder={placeholder}
         onChange={onChange}
         value={value}
+        name={name}
         className={`border border-gray p-2 w-full h-10 rounded-lg text-md font-normal focus:outline-primary px-10 text-primary-color ${styling}`} />
       {type === 'password' && <span className="absolute right-2 top-[52%] translate-y-[-50%] cursor-pointer"
         onClick={handleShowPass}>

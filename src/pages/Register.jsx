@@ -3,7 +3,7 @@ import Welcome from '../components/Welcome';
 import InputField from '../components/InputField';
 import Button from '../components/Button';
 import { emailIcon, passwordIcon, userIcon, globalIcon } from '../assets';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Heading from '../components/Heading';
 import { useDispatch } from 'react-redux';
 import { signUp } from '../redux/authSlice';
@@ -17,13 +17,18 @@ const Register = () => {
   const [country, setCountry] = useState('');
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
-    dispatch(signUp({ name, email, password, confirmPassword, country }));
-    toast.success('Registration Success!');
-
-    console.log(name, email, password, confirmPassword, country);
+    try {
+      await dispatch(signUp({ name, email, password, confirmPassword, country }));
+      toast.success(`${name} your account Successfully create!`);
+      // navigate('/'); 
+    } catch (error) {
+      toast.error('Registration failed. Please try again.');
+      console.log(error.message);
+    }
   };
   return (
     <>
