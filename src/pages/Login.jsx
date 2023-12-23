@@ -11,8 +11,8 @@ const Login = () => {
     console.log('Login');
   };
 
-  const handleLogin = () => {
-    console.log('login');
+  const handleLogin = (e) => {
+    e.preventDefault();
   };
   return (
     <section className='container'>
@@ -20,16 +20,20 @@ const Login = () => {
         {/* Welcome Column  */}
         <Welcome />
         {/* Login Form  */}
-        <div className="h-full mx-auto flex items-center justify-center flex-col w-full max-w-96 px-3">
-          <h4 className='text-lg lg:text-2xl font-bold mb-16 text-center'>Welcome Back</h4>
-          <InputField placeholder='Email' type='email' onChange={handleChange} styling={''} fieldIcon={emailIcon} />
-          <InputField placeholder='Password' type='password' onChange={handleChange} styling={''} fieldIcon={passwordIcon} />
+        <form className="h-full mx-auto flex items-center justify-center flex-col w-full max-w-96 px-3 lg:p-0">
+          <h4 className='text-lg lg:text-2xl font-bold mb-16 text-center capitalize'>Welcome Back</h4>
+          <InputField placeholder='Email' type='email' onChange={handleChange} fieldIcon={emailIcon} />
+          <InputField placeholder='Password' type='password' onChange={handleChange} fieldIcon={passwordIcon} />
 
           <div className="text-end w-full mb-8">
-            <Link to={'/forget'} className="text-primary-light text-md font-normal">Forgot password?</Link>
+            <Link to={'/forget'} className="text-primary-light text-md font-normal hover:underline">Forgot password?</Link>
           </div>
-          <Button type={'button'} text={'Login'} onClick={handleLogin} className={'bg-primary text-white'} />
-        </div>
+          <Button type={'submit'} text={'Login'} onClick={handleLogin} className={'bg-primary text-white'} />
+          <div className="w-full mb-6 mt-2 text-center">
+            <span className=" text-primary-color or-line">Or</span>
+          </div>
+          <p className="font-normal text-md text-primary-color">Have no account yet? <Link to={'/register'} className="text-primary-light font-semibold hover:underline">Register</Link> </p>
+        </form>
       </div>
     </section>
   );
