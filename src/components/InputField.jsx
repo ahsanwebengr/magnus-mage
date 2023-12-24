@@ -21,6 +21,7 @@ const InputField = (props) => {
         onChange={onChange}
         value={value}
         name={name}
+        required='required'
         className={`border border-gray p-2 w-full h-10 rounded-lg text-md font-normal focus:outline-primary px-10 text-primary-color ${styling}`} />
       {type === 'password' && <span className="absolute right-2 top-[52%] translate-y-[-50%] cursor-pointer"
         onClick={handleShowPass}>
