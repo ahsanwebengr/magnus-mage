@@ -45,7 +45,6 @@ const Login = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 min-h-screen">
         {/* Welcome Column  */}
         <Welcome />
-
         {/* Login Form  */}
         <form onSubmit={handleLogin} className="h-full mx-auto flex items-center justify-center flex-col w-full max-w-96 px-3 lg:p-0">
           <Heading text={'Welcome Back'} style={'mb-16'} />

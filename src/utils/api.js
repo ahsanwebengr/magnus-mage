@@ -3,13 +3,13 @@ import { getAccessToken } from "./users.util";
 
 const api = (header) => {
   const accessToken = getAccessToken();
-  
+
   if (!header) {
     header = { Accept: "application/json", "Content-Type": "application/json" };
   }
 
   const apiSet = axios.create({
-    baseURL: 'http://182.176.169.225:19008/api/v1/',
+    baseURL: import.meta.env.VITE_BASE_URL,
     headers: accessToken ? { ...header, Authorization: `Bearer ${accessToken}` } : header
   });
 
