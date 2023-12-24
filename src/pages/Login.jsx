@@ -1,7 +1,7 @@
-import InputField from "../components/InputField";
+import React from "react";
 import Welcome from "../components/Welcome";
-import { emailIcon } from '../assets';
-import { passwordIcon } from '../assets';
+import InputField from "../components/InputField";
+import { emailIcon, passwordIcon } from '../assets';
 import { Link } from "react-router-dom";
 import Button from "../components/Button";
 import Heading from "../components/Heading";
@@ -9,29 +9,53 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { signIn } from "../redux/authSlice";
 
-
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  });
 
   const dispatch = useDispatch();
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value
+    }));
+  };
+
   const handleLogin = (e) => {
     e.preventDefault();
-    dispatch(signIn({ email, password }));
-
-    console.log(email, password);
+    dispatch(signIn(formData));
+    console.log(formData.email, formData.password);
   };
+
   return (
     <section className='container'>
       <div className="grid grid-cols-1 md:grid-cols-2 min-h-screen">
         {/* Welcome Column  */}
         <Welcome />
+        
         {/* Login Form  */}
         <form onSubmit={handleLogin} className="h-full mx-auto flex items-center justify-center flex-col w-full max-w-96 px-3 lg:p-0">
           <Heading text={'Welcome Back'} style={'mb-16'} />
-          <InputField placeholder='Email' type='email' value={email} onChange={(e) => setEmail(e.target.value)} fieldIcon={emailIcon} />
-          <InputField placeholder='Password' type='password' value={password} onChange={(e) => setPassword(e.target.value)} fieldIcon={passwordIcon} />
+          <InputField
+            placeholder='Email'
+            type='email'
+            value={formData.email}
+            onChange={handleChange}
+            fieldIcon={emailIcon}
+            name='email'
+          />
+          <InputField
+            placeholder='Password'
+            type='password'
+            value={formData.password}
+            onChange={handleChange}
+            fieldIcon={passwordIcon}
+            name='password'
+          />
 
           <div className="text-end w-full mb-8">
             <Link to={'/forget'} className="text-primary-light text-md font-normal hover:underline">Forgot password?</Link>

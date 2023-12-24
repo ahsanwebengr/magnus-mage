@@ -2,11 +2,8 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { json } from 'react-router-dom';
 
 const initialState = {
-    msg: '',
     user: null,
     token: null,
-    loading: false,
-    error: ''
 };
 
 export const signUp = createAsyncThunk('signUp', async (body) => {
@@ -43,9 +40,77 @@ export const signIn = createAsyncThunk('signIn', async (body) => {
     }
 });
 
+export const forgotPassword = createAsyncThunk('forgotPassword', async (body) => {
+    try {
+        const res = await fetch('http://182.176.169.225:19008/api/v1/users/forgotPassword', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(body)
+        });
+
+        return await res.json();
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+});
+
+export const verifyCode = createAsyncThunk('verifyCode', async (body) => {
+    try {
+        const res = await fetch('http://182.176.169.225:19008/api/v1/users/verifyCode', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(body)
+        });
+
+        return await res.json();
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+});
+
+export const getBlogs = createAsyncThunk('blogs', async () => {
+    try {
+        const res = await fetch('http://182.176.169.225:19008/api/v1/blogs', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        return await res.json();
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+});
+
+export const resetPassword = createAsyncThunk('resetPassword', async (body) => {
+    try {
+        const res = await fetch('http://182.176.169.225:19008/api/v1/users/resetPassword', {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(body),
+        });
+
+        return await res.json();
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+});
+
+
 
 export const authSlice = createSlice({
-    name: 'user',
+    name: 'auth',
     initialState,
     reducers: {
         addToken: (state, action) => {
