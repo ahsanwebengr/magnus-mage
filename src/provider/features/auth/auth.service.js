@@ -13,14 +13,15 @@ const signUp = async (userData) => {
   return response.data;
 };
 
-const forgotPassword = async (userData) => {
-  const response = await api().post('users/forgotPassword', userData);
+const forgotPassword = async (email) => {
+  const response = await api().post('users/forgotPassword', { email });
   return response.data;
 };
 
 const authService = {
   login,
   signUp,
+  forgotPassword
 };
 
 export default authService;

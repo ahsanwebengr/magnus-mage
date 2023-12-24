@@ -3,7 +3,7 @@ import { getAccessToken } from "./users.util";
 
 const api = (header) => {
   const accessToken = getAccessToken();
-
+  
   if (!header) {
     header = { Accept: "application/json", "Content-Type": "application/json" };
   }

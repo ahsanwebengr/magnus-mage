@@ -31,16 +31,19 @@ const VerifyOtp = () => {
                     <div className="text-end w-full">
                         <p className="text-primary capitalize text-base font-bold">resend Code</p>
                     </div>
+
                     <Button
                         type={'submit'}
-                        text={'Verify'}
-                        className={'bg-primary text-white mt-12'}
-                    />
+                        className={'bg-primary text-white mt-12'}>
+                        Verify
+                    </Button>
+
                     <Button
                         type={'button'}
-                        text={'Back'}
                         className={'bg-white text-primary-color border border-primary-border'}
-                        onClick={() => navigate('/forget')} />
+                        onClick={() => navigate('/forget')} >
+                        Back
+                    </Button>
                 </form>
             </div>
         </section>

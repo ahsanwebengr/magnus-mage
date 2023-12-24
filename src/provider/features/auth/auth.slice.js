@@ -16,8 +16,34 @@ const initialState = {
     isSuccess: false,
     isLoading: false,
     message: ''
+  },
+  forgotPassword: {
+    isError: false,
+    isSuccess: false,
+    isLoading: false,
+    message: '',
   }
 };
+
+// Forget Password
+export const forgotPassword = createAsyncThunk(
+  'users/forgotPassword',
+  async ({ payload, successCallBack }, thunkAPI) => {
+    try {
+      const response = await authService.forgotPassword(payload);
+      if (response.message) {
+        toast.success(response.message);
+        successCallBack(response);
+        return response;
+      } else {
+        return toast.error(response.message);
+      }
+      return thunkAPI.rejectWithValue(response);
+    } catch (error) {
+      return thunkAPI.rejectWithValue({ payload: error });
+    }
+  }
+);
 
 // Login user
 export const login = createAsyncThunk(
@@ -39,6 +65,7 @@ export const login = createAsyncThunk(
     }
   }
 );
+
 // signUp user
 export const signUp = createAsyncThunk(
   'auth/register',
@@ -101,6 +128,21 @@ export const authSlice = createSlice({
         state.signUp.isError = false;
         state.signUp.isSuccess = false;
         state.signUp.data = null;
+      })
+      .addCase(forgotPassword.fulfilled, (state) => {
+        state.forgotPassword.isLoading = false;
+        state.forgotPassword.isSuccess = true;
+      })
+      .addCase(forgotPassword.rejected, (state) => {
+        state.forgotPassword.message = '';
+        state.forgotPassword.isLoading = false;
+        state.forgotPassword.isError = true;
+      })
+      .addCase(forgotPassword.pending, (state) => {
+        state.forgotPassword.isLoading = true;
+        state.forgotPassword.message = '';
+        state.forgotPassword.isError = false;
+        state.forgotPassword.isSuccess = false;
       });
   }
 });
