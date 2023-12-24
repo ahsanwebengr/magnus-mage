@@ -2,12 +2,13 @@ import React from "react";
 import Welcome from "../components/Welcome";
 import InputField from "../components/InputField";
 import { emailIcon, passwordIcon } from '../assets';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import Heading from "../components/Heading";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { signIn } from "../redux/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../provider/features/auth/auth.slice";
+import Spinner from "../components/Spinner";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -16,6 +17,8 @@ const Login = () => {
   });
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const isLoading = useSelector((state) => state.auth?.login?.isLoading);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,10 +28,16 @@ const Login = () => {
     }));
   };
 
+  const moveRouter = (response) => {
+    if (response.message === 'Success') {
+      navigate('/dashboard');
+    }
+  };
+
   const handleLogin = (e) => {
     e.preventDefault();
-    dispatch(signIn(formData));
-    console.log(formData.email, formData.password);
+    dispatch(login({ payload: formData, successCallBack: moveRouter }));
+
   };
 
   return (
@@ -36,7 +45,7 @@ const Login = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 min-h-screen">
         {/* Welcome Column  */}
         <Welcome />
-        
+
         {/* Login Form  */}
         <form onSubmit={handleLogin} className="h-full mx-auto flex items-center justify-center flex-col w-full max-w-96 px-3 lg:p-0">
           <Heading text={'Welcome Back'} style={'mb-16'} />
@@ -60,7 +69,9 @@ const Login = () => {
           <div className="text-end w-full mb-8">
             <Link to={'/forget'} className="text-primary-light text-md font-normal hover:underline">Forgot password?</Link>
           </div>
-          <Button type={'submit'} text={'Login'} className={'bg-primary text-white'} />
+          <Button type={'submit'} className={'bg-primary text-white'} >
+            {isLoading ? <Spinner /> : 'Login'}
+          </Button>
           <div className="w-full mb-6 mt-2 text-center">
             <span className=" text-primary-color or-line">Or</span>
           </div>

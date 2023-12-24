@@ -5,11 +5,16 @@ import Button from '../components/Button';
 import { emailIcon, passwordIcon, userIcon, globalIcon } from '../assets';
 import { Link, useNavigate } from 'react-router-dom';
 import Heading from '../components/Heading';
-import { useDispatch } from 'react-redux';
-import { signUp } from '../redux/authSlice';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import { signUp } from '../provider/features/auth/auth.slice';
+import Spinner from '../components/Spinner';
 
 const Register = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const isLoading = useSelector((state) => state.auth?.signUp?.isLoading);
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -18,8 +23,6 @@ const Register = () => {
     country: ''
   });
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -29,18 +32,16 @@ const Register = () => {
     }));
   };
 
+  const moveRouter = (response) => {
+    navigate('/');
+  };
   const handleRegister = async (e) => {
     e.preventDefault();
-    const { name, email, password, confirmPassword, country } = formData;
-    try {
-      await dispatch(signUp({ name, email, password, confirmPassword, country }));
-      toast.success(`${name} your account Successfully create!`);
-      // navigate('/');
-    } catch (error) {
-      toast.error('Registration failed. Please try again.');
-      console.log(error.message);
-    }
+    dispatch(signUp({ payload: formData, successCallBack: moveRouter }));
   };
+
+
+
 
   return (
     <>
@@ -48,6 +49,7 @@ const Register = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 min-h-screen">
           {/* Welcome Column  */}
           <Welcome />
+
           {/* Login Form  */}
           <form onSubmit={handleRegister} className="h-full mx-auto flex items-center justify-center flex-col w-full max-w-96 px-3 lg:p-0">
             <Heading text={'create account'} style={'mb-16'} />
@@ -93,7 +95,7 @@ const Register = () => {
                 onChange={handleChange}
                 name='country'
               >
-                <option value='null'>Select Country</option>
+                <option value=''>Select Country</option>
                 <option value="Pakistan">Pakistan</option>
                 <option value="England">England</option>
                 <option value="France">France</option>
@@ -101,7 +103,9 @@ const Register = () => {
               </select>
             </div>
 
-            <Button type={'submit'} text={'Register'} className={'bg-primary text-white'} />
+            <Button type={'submit'} className={'bg-primary text-white'} >
+              {isLoading ? <Spinner /> : 'Register'}
+            </Button>
             <div className="w-full mb-6 mt-2 text-center">
               <span className=" text-primary-color or-line">Or</span>
             </div>
