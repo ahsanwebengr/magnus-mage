@@ -5,11 +5,16 @@ import Button from '../components/Button';
 import { emailIcon, passwordIcon, userIcon, globalIcon } from '../assets';
 import { Link, useNavigate } from 'react-router-dom';
 import Heading from '../components/Heading';
-import { useDispatch } from 'react-redux';
-import { signUp } from '../redux/authSlice';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import { signUp } from '../provider/features/auth/auth.slice';
 
 const Register = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const errorMsg = useSelector((state) => state.auth?.error);
+  const loading = useSelector((state) => state.auth?.loading);
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -18,8 +23,6 @@ const Register = () => {
     country: ''
   });
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -29,18 +32,20 @@ const Register = () => {
     }));
   };
 
+  const moveRouter = (response) => {
+    navigate('/');
+  };
   const handleRegister = async (e) => {
     e.preventDefault();
-    const { name, email, password, confirmPassword, country } = formData;
-    try {
-      await dispatch(signUp({ name, email, password, confirmPassword, country }));
-      toast.success(`${name} your account Successfully create!`);
-      // navigate('/');
-    } catch (error) {
-      toast.error('Registration failed. Please try again.');
-      console.log(error.message);
+
+    if (formData.password !== formData.confirmPassword) {
+      return toast.error('Passwords do not match');
     }
+    dispatch(signUp({ payload: formData, successCallBack: moveRouter }));
   };
+
+
+
 
   return (
     <>
@@ -101,7 +106,7 @@ const Register = () => {
               </select>
             </div>
 
-            <Button type={'submit'} text={'Register'} className={'bg-primary text-white'} />
+            <Button type={'submit'} text={`${loading ? 'Loading...' : 'Register'}`} className={'bg-primary text-white'} />
             <div className="w-full mb-6 mt-2 text-center">
               <span className=" text-primary-color or-line">Or</span>
             </div>
