@@ -19,6 +19,7 @@ const VerifyOtp = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 min-h-screen">
                 {/* Welcome Column  */}
                 <Welcome />
+                
                 {/* Login Form  */}
                 <form onSubmit={handleSubmit} className="h-full mx-auto flex items-center justify-center flex-col w-full max-w-96 px-3 lg:p-0">
                     <Heading text={'Forget password'} style={'mb-6'} />

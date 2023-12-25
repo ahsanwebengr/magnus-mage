@@ -15,6 +15,7 @@ const Dashboard = () => {
     const moveRouter = (response) => {
         const getBlogs = response?.data?.result;
         setBlogs(getBlogs);
+        console.log(response);
     };
 
     useEffect(() => {

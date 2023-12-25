@@ -3,7 +3,7 @@ import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 
 const InputField = (props) => {
   const [isPassShow, setIsPassShow] = useState(false);
-  const { type, onChange, placeholder, styling, icon, value, name, errors, register, control, } = props;
+  const { type, placeholder, styling, icon, name, errors, register, control, } = props;
 
 
   const handleShowPass = () => {
@@ -16,8 +16,8 @@ const InputField = (props) => {
         <span>
           <img src={icon} alt="email-icon" className='absolute left-2 top-[52%] translate-y-[-50%] h-5 object-cover' />
         </span>
-        <input
 
+        <input
           type={isPassShow ? 'text' : type}
           placeholder={placeholder}
           {...register(name)}
