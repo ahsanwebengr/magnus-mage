@@ -31,7 +31,7 @@ export const forgotPassword = createAsyncThunk(
   async ({ payload, successCallBack }, thunkAPI) => {
     try {
       const response = await authService.forgotPassword(payload);
-      if (response.message) {
+      if (response.message === 'Recovery code send to your email address') {
         toast.success(response.message);
         successCallBack(response);
         return response;
