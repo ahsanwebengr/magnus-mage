@@ -1,7 +1,7 @@
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 const Pagination = ({ currentPage, totalPages, onPageChange, onPrevPage, onNextPage }) => {
     return (
-        <div className="text-end my-8">
+        <div className="text-end flex items-center justify-end my-8">
             <button
                 onClick={onPrevPage}
                 className={`px-3 py-1 mx-5 inline-flex items-center justify-center bg-primary text-white hover:bg-primary  ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : 'opacity-100'} w-10 h-10 rounded-full`}
