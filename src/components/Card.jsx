@@ -28,7 +28,7 @@ const Card = ({ blog }) => {
     return (
         <>
             <article className='px-3 py-2.5 bg-mega-light rounded-lg'>
-                <div className="w-full h-36 mb-2">
+                <div className="w-full h-42 md:h-36 mb-2">
                     <img src={image} alt="card-img" className='rounded w-full h-full object-cover' />
                 </div>
                 <h4 className='text-base font-bold truncate w-60 text-mega-black'>{title}</h4>

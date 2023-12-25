@@ -14,7 +14,7 @@ const signUp = async (userData) => {
 };
 
 const forgotPassword = async (email) => {
-  const response = await api().post('users/forgotPassword', { email });
+  const response = await api().post('users/forgotPassword', email);
   return response.data;
 };
 

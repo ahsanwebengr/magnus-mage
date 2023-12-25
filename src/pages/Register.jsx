@@ -9,39 +9,51 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { signUp } from '../provider/features/auth/auth.slice';
 import Spinner from '../components/Spinner';
+import { useForm } from "react-hook-form";
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isLoading = useSelector((state) => state.auth?.signUp?.isLoading);
 
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    country: ''
+  const validationSchema = yup.object().shape({
+    name: yup
+      .string()
+      .required('Name is required'),
+    email: yup
+      .string()
+      .email('Invalid email')
+      .required('Email is required'),
+    password: yup
+      .string()
+      .required("Password is required"),
+    confirmPassword: yup
+      .string()
+      .oneOf([yup.ref('password'), null], 'Passwords must match')
+      .required("Confirm Password is required"),
   });
 
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm({
+    mode: 'onChange',
+    resolver: yupResolver(validationSchema),
+  });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value
-    }));
+  const onSubmit = async (data) => {
+    const payload = {
+      name: data?.name,
+      email: data?.email,
+      password: data?.password,
+      confirmPassword: data?.confirmPassword
+    };
+    dispatch(signUp({ payload, successCallBack: () => navigate('/') }));
   };
-
-  const moveRouter = (response) => {
-    navigate('/');
-  };
-  const handleRegister = async (e) => {
-    e.preventDefault();
-    dispatch(signUp({ payload: formData, successCallBack: moveRouter }));
-  };
-
-
-
 
   return (
     <>
@@ -51,38 +63,42 @@ const Register = () => {
           <Welcome />
 
           {/* Login Form  */}
-          <form onSubmit={handleRegister} className="h-full mx-auto flex items-center justify-center flex-col w-full max-w-96 px-3 lg:p-0">
+          <form onSubmit={handleSubmit(onSubmit)} className="h-full mx-auto flex items-center justify-center flex-col gap-4 w-full max-w-96 px-3 lg:p-0">
             <Heading text={'create account'} style={'mb-16'} />
             <InputField
               placeholder='Name'
               type='text'
-              fieldIcon={userIcon}
-              value={formData.name}
-              onChange={handleChange}
+              icon={userIcon}
+              control={control}
+              errors={errors}
+              register={register}
               name='name'
             />
             <InputField
               placeholder='Email'
               type='email'
-              fieldIcon={emailIcon}
-              value={formData.email}
-              onChange={handleChange}
+              icon={emailIcon}
+              control={control}
+              errors={errors}
+              register={register}
               name='email'
             />
             <InputField
               placeholder='Password'
               type='password'
-              fieldIcon={passwordIcon}
-              value={formData.password}
-              onChange={handleChange}
+              icon={passwordIcon}
+              control={control}
+              errors={errors}
+              register={register}
               name='password'
             />
             <InputField
               placeholder='Confirm Password'
               type='password'
-              fieldIcon={passwordIcon}
-              value={formData.confirmPassword}
-              onChange={handleChange}
+              icon={passwordIcon}
+              control={control}
+              errors={errors}
+              register={register}
               name='confirmPassword'
             />
             <div className='mb-12 w-full relative'>
@@ -90,9 +106,8 @@ const Register = () => {
                 <img src={globalIcon} alt="email-icon" className='absolute left-2 top-[52%] translate-y-[-50%] h-5 object-cover' />
               </span>
               <select
-                className={`border border-gray p-2 w-full h-10 rounded-lg text-md font-medium focus:outline-primary px-10 text-primary-color`}
-                value={formData.country}
-                onChange={handleChange}
+                className={`border border-gray p-2 w-full h-10 rounded-lg 
+                text-md font-medium focus:outline-primary px-10 text-primary-color`}
                 name='country'
               >
                 <option value=''>Select Country</option>
@@ -103,13 +118,18 @@ const Register = () => {
               </select>
             </div>
 
-            <Button type={'submit'} className={'bg-primary text-white'} >
+            <Button type={'submit'}
+              className={'bg-primary text-white'} >
               {isLoading ? <Spinner /> : 'Register'}
             </Button>
             <div className="w-full mb-6 mt-2 text-center">
               <span className=" text-primary-color or-line">Or</span>
             </div>
-            <p className="font-normal text-md text-primary-color">Have an account yet? <Link to={'/'} className="text-primary-light font-semibold hover:underline">Login</Link> </p>
+            <p
+              className="font-normal text-md text-primary-color">
+              Have an account yet?
+              <Link to={'/'} className="text-primary-light font-semibold hover:underline">
+                Login</Link> </p>
           </form>
         </div>
       </section>
