@@ -1,7 +1,3 @@
-/**
- * Retrive access token from local storage
- * @returns string | undefined
- */
 
 export const getUser = () => {
   if (typeof window === 'object' && window?.localStorage?.getItem('user')) {
@@ -10,10 +6,6 @@ export const getUser = () => {
   return undefined;
 };
 
-/**
- * Retrive access token from local storage
- * @returns string | undefined
- */
 export const getAccessToken = (data) => {
   if ((typeof window === 'object' && window?.localStorage?.getItem('user')) || data) {
     const user = data ?? JSON.parse(localStorage.getItem('user'));
