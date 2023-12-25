@@ -1,8 +1,10 @@
-# React + Vite
+# Magnus Mage
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Description
+This project is a React application built using Redux Toolkit, designed to handle user authentication functionalities such as signup, login, and password recovery.
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Installation
+1. Clone the repository to your local machine:
+   ```bash
+   git clone https://github.com/your-username/your-repo.git
+   
