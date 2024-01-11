@@ -22,8 +22,34 @@ const initialState = {
     isSuccess: false,
     isLoading: false,
     message: '',
-  }
+  },
+  verifyOTP: {
+    data: null,
+    isError: false,
+    isSuccess: false,
+    isLoading: false,
+    message: ''
+  },
 };
+
+// Verify OTP
+export const verifyOTP = createAsyncThunk(
+  'users/verifyCode',
+  async ({ payload, successCallBack }, thunkAPI) => {
+    try {
+      const response = await authService.verifyOTP(payload);
+      if (response.message === 'Success') {
+        toast.success(response.message);
+        successCallBack(response);
+        return response;
+      } else {
+        return toast.error(response.message);
+      }
+    } catch (error) {
+      return thunkAPI.rejectWithValue({ payload: error });
+    }
+  }
+);
 
 // Forget Password
 export const forgotPassword = createAsyncThunk(
@@ -143,6 +169,25 @@ export const authSlice = createSlice({
         state.forgotPassword.message = '';
         state.forgotPassword.isError = false;
         state.forgotPassword.isSuccess = false;
+      })
+      .addCase(verifyOTP.fulfilled, (state, action) => {
+        state.verifyOTP.isLoading = false;
+        state.verifyOTP.isSuccess = true;
+        state.verifyOTP.data = action.payload;
+      })
+      .addCase(verifyOTP.rejected, (state) => {
+        state.verifyOTP.message = '';
+        state.verifyOTP.isLoading = false;
+        state.verifyOTP.isError = true;
+        state.verifyOTP.data = false;
+      })
+      .addCase(verifyOTP.pending, (state) => {
+        state.verifyOTP.isLoading = true;
+        state.verifyOTP.message = '';
+        state.verifyOTP.isError = false;
+        state.verifyOTP.isSuccess = false;
+        state.verifyOTP.data = false;
+
       });
   }
 });

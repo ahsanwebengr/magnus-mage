@@ -18,10 +18,16 @@ const forgotPassword = async (email) => {
   return response.data;
 };
 
+const verifyOTP = async (userData) => {
+  const response = await api().post('users/verifyCode', userData);
+  return response.data;
+};
+
 const authService = {
   login,
   signUp,
-  forgotPassword
+  forgotPassword,
+  verifyOTP
 };
 
 export default authService;

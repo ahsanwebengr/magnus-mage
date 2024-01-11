@@ -1,19 +1,19 @@
 import React, { useRef, useState } from 'react';
 
-const OTPInput = () => {
+const OTPInput = ({ onChange }) => {
     const [otp, setOtp] = useState(['', '', '', '', '', '']);
     const inputRefs = useRef(new Array(6).fill(null).map(() => React.createRef()));
 
     const handleInputChange = (e, index) => {
-        const value = e.target.value;
+        const newValue = e.target.value;
 
-        if (!isNaN(value) && value !== '') {
+        if (!isNaN(newValue) && newValue !== '') {
             const newOtp = [...otp];
-            newOtp[index] = value;
+            newOtp[index] = newValue;
 
             setOtp(newOtp);
 
-            if (index < 5 && value !== '') {
+            if (index < 5 && newValue !== '') {
                 inputRefs.current[index + 1].current.focus();
             }
         } else {
@@ -25,11 +25,16 @@ const OTPInput = () => {
             newOtp[index] = '';
             setOtp(newOtp);
         }
+
+        // Call the parent onChange function with the updated OTP value
+        onChange(newOtp.join(''));
     };
 
     const handleKeyDown = (e, index) => {
         if (e.key === 'Backspace' && index > 0 && otp[index] === '') {
             inputRefs.current[index - 1].current.focus();
+        } else if (e.key !== 'Backspace' && index < 5 && otp[index] !== '') {
+            inputRefs.current[index + 1].current.focus();
         }
     };
 
@@ -44,6 +49,9 @@ const OTPInput = () => {
             setOtp(newOtp);
 
             inputRefs.current[5].current.focus();
+
+            // Call the parent onChange function with the pasted OTP value
+            onChange(newOtp.join(''));
         }
     };
 
