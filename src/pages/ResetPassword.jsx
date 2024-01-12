@@ -6,8 +6,11 @@ import Heading from "../components/Heading";
 import { useForm } from "react-hook-form";
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { resetPassword } from "../provider/features/auth/auth.slice";
+import { useDispatch } from "react-redux";
 
 const ResetPassword = () => {
+    const dispatch = useDispatch();
 
     const validationSchema = yup.object().shape({
         password: yup
@@ -38,7 +41,7 @@ const ResetPassword = () => {
             email: data?.password,
             email: data?.confirmPassword,
         };
-        // dispatch(forgotPassword({ payload, successCallBack: () => navigate('/verify-otp') }));
+        dispatch(resetPassword({ payload, successCallBack: () => navigate('/') }));
     };
 
     return (
@@ -46,7 +49,7 @@ const ResetPassword = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 min-h-screen">
                 {/* Welcome Column  */}
                 <Welcome />
-                
+
                 {/* Login Form  */}
                 <form onSubmit={handleSubmit(onSubmit)} className="h-full mx-auto flex items-center justify-center flex-col w-full max-w-96 px-3 lg:p-0">
                     <Heading text={'Forget password'} style={'mb-16'} />
