@@ -20,3 +20,16 @@ Magnus Mage is a React application built using Redux Toolkit, designed to handle
 -   React
 -   Redux Toolkit
 -   Vite
+
+## Testing Instructions
+ To test this project, follow the steps outlined below:
+1. Open the project in your preferred browser 🛜.
+2. Navigate to the project URL in the browser.
+3. In the URL search bar, click on the "View site information" icon ℹ️. This icon is typically represented as a padlock or an information symbol.
+4. A dropdown menu will appear 🦿. Click on the "Site settings" option.
+5. Look for the "Insecure content" ❌ setting in the site settings.
+6. Allow insecure content by changing the setting to allow.
+7. Reload the site 🔄️.
+
+## Important Note
+Allowing insecure content may pose security risks, and it is generally not recommended for regular browsing. Only enable insecure content for testing purposes in a controlled environment.
