@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Welcome from '../components/Welcome';
 import Button from '../components/Button';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { warningIcon } from '../assets';
 import OTPInput from '../components/OTPInput';
 import Heading from '../components/Heading';
@@ -11,23 +11,33 @@ import { verifyOTP } from '../provider/features/auth/auth.slice';
 const VerifyOtp = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const location = useLocation();
+    const [otpValue, setOtpValue] = useState('');
+    const [email, setEmail] = useState('');
 
-    const handleOTPChange = (otpValue) => {
-        // Do something with the OTP value, for example, update state
-        console.log('Received OTP:', otpValue);
+    useEffect(() => {
+        if (location?.state && location?.state?.email) {
+            setEmail(location?.state?.email);
+        }
+    }, [location.state]);
+
+    const handleOTPChange = (value) => {
+        setOtpValue(Number(value));
     };
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
         const payload = {
-            email: "iamahsan512@gmail.com",
+            email: email,
             code: otpValue
         };
 
-        dispatch(verifyOTP({ payload, successCallBack: () => navigate('/verify-otp') }));
+        dispatch(verifyOTP({ payload, successCallBack: () => navigate('/reset') }));
 
     };
+
 
     return (
         <section className='container'>

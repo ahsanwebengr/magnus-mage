@@ -23,11 +23,17 @@ const verifyOTP = async (userData) => {
   return response.data;
 };
 
+const resetPassword = async (userData) => {
+  const response = await api().patch('users/resetPassword', userData);
+  return response.data;
+};
+
 const authService = {
   login,
   signUp,
   forgotPassword,
-  verifyOTP
+  verifyOTP,
+  resetPassword
 };
 
 export default authService;

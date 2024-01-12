@@ -30,7 +30,31 @@ const initialState = {
     isLoading: false,
     message: ''
   },
+  resetPassword: {
+    isError: false,
+    isSuccess: false,
+    isLoading: false,
+  },
 };
+
+// Reset Password
+export const resetPassword = createAsyncThunk(
+  'users/resetPassword',
+  async ({ payload, successCallBack }, thunkAPI) => {
+    try {
+      const response = await authService.resetPassword(payload);
+      if (response.message === 'Success') {
+        toast.success(response.message);
+        successCallBack(response);
+        return response;
+      } else {
+        return toast.error(response.message);
+      }
+    } catch (error) {
+      return thunkAPI.rejectWithValue({ payload: error });
+    }
+  }
+);
 
 // Verify OTP
 export const verifyOTP = createAsyncThunk(
@@ -64,7 +88,6 @@ export const forgotPassword = createAsyncThunk(
       } else {
         return toast.error(response.message);
       }
-      return thunkAPI.rejectWithValue(response);
     } catch (error) {
       return thunkAPI.rejectWithValue({ payload: error });
     }
@@ -85,7 +108,6 @@ export const login = createAsyncThunk(
       } else {
         return toast.error(response.message);
       }
-      return thunkAPI.rejectWithValue(response);
     } catch (error) {
       return thunkAPI.rejectWithValue({ payload: error });
     }
@@ -106,7 +128,6 @@ export const signUp = createAsyncThunk(
         return toast.error(response.message);
       }
 
-      return thunkAPI.rejectWithValue(response);
     } catch (error) {
       return thunkAPI.rejectWithValue({ payload: error });
     }
@@ -187,7 +208,19 @@ export const authSlice = createSlice({
         state.verifyOTP.isError = false;
         state.verifyOTP.isSuccess = false;
         state.verifyOTP.data = false;
-
+      })
+      .addCase(resetPassword.fulfilled, (state, action) => {
+        state.resetPassword.isLoading = false;
+        state.resetPassword.isSuccess = true;
+      })
+      .addCase(resetPassword.rejected, (state) => {
+        state.resetPassword.isLoading = false;
+        state.resetPassword.isError = true;
+      })
+      .addCase(resetPassword.pending, (state) => {
+        state.resetPassword.isLoading = true;
+        state.resetPassword.isError = false;
+        state.resetPassword.isSuccess = false;
       });
   }
 });

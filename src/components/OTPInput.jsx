@@ -6,9 +6,10 @@ const OTPInput = ({ onChange }) => {
 
     const handleInputChange = (e, index) => {
         const newValue = e.target.value;
+        let newOtp;
 
         if (!isNaN(newValue) && newValue !== '') {
-            const newOtp = [...otp];
+            newOtp = [...otp];
             newOtp[index] = newValue;
 
             setOtp(newOtp);
@@ -21,12 +22,10 @@ const OTPInput = ({ onChange }) => {
                 inputRefs.current[index - 1].current.focus();
             }
 
-            const newOtp = [...otp];
+            newOtp = [...otp];
             newOtp[index] = '';
             setOtp(newOtp);
         }
-
-        // Call the parent onChange function with the updated OTP value
         onChange(newOtp.join(''));
     };
 
@@ -45,12 +44,11 @@ const OTPInput = ({ onChange }) => {
         const pastedDigits = pastedData.match(/\d/g);
 
         if (pastedDigits && pastedDigits.length === 6) {
-            const newOtp = pastedDigits.slice(0, 6);
+            newOtp = pastedDigits.slice(0, 6);
             setOtp(newOtp);
 
             inputRefs.current[5].current.focus();
 
-            // Call the parent onChange function with the pasted OTP value
             onChange(newOtp.join(''));
         }
     };

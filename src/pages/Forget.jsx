@@ -38,7 +38,7 @@ const Forget = () => {
     const payload = {
       email: data?.email,
     };
-    dispatch(forgotPassword({ payload, successCallBack: () => navigate('/verify-otp') }));
+    dispatch(forgotPassword({ payload, successCallBack: () => navigate('/verify-otp', { state: { email: data?.email } }) }));
   };
 
   return (
@@ -51,7 +51,7 @@ const Forget = () => {
         <form onSubmit={handleSubmit(onSubmit)} className="h-full mx-auto flex items-center justify-center flex-col w-full max-w-96 px-3 lg:p-0">
           <Heading text={'Forget password'} style={'mb-6'} />
           <p className='text-center text-base text-primary-color mb-8'>Seems you forget your password, we’ll send a recovery code to your email</p>
-          
+
           <InputField
             placeholder='Email'
             type='email'
