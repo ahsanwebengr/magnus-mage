@@ -5,8 +5,9 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { warningIcon } from '../assets';
 import OTPInput from '../components/OTPInput';
 import Heading from '../components/Heading';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { verifyOTP } from '../provider/features/auth/auth.slice';
+import Spinner from '../components/Spinner';
 
 const VerifyOtp = () => {
     const navigate = useNavigate();
@@ -14,6 +15,8 @@ const VerifyOtp = () => {
     const location = useLocation();
     const [otpValue, setOtpValue] = useState('');
     const [email, setEmail] = useState('');
+    const isLoading = useSelector((state) => state.auth?.verifyOTP?.isLoading);
+
 
     useEffect(() => {
         if (location?.state && location?.state?.email) {
@@ -61,7 +64,7 @@ const VerifyOtp = () => {
                     <Button
                         type={'submit'}
                         className={'bg-primary text-white mt-12'}>
-                        Verify
+                        {isLoading ? <Spinner /> : 'Verify'}
                     </Button>
 
                     <Button

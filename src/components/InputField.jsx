@@ -11,9 +11,9 @@ const InputField = (props) => {
   };
 
   return (<>
-    <div className='w-full mb-4'>
+    <div className='w-full mb-3'>
       <div className="relative">
-        <span>
+        <span className="select-none">
           <img src={icon} alt="email-icon" className='absolute left-2 top-[52%] translate-y-[-50%] h-5 object-cover' />
         </span>
 

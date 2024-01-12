@@ -7,10 +7,13 @@ import { useForm } from "react-hook-form";
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { resetPassword } from "../provider/features/auth/auth.slice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import Spinner from "../components/Spinner";
 
 const ResetPassword = () => {
     const dispatch = useDispatch();
+    const isLoading = useSelector((state) => state.auth?.resetPassword?.isLoading);
+
 
     const validationSchema = yup.object().shape({
         password: yup
@@ -19,7 +22,8 @@ const ResetPassword = () => {
             .matches(
                 /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/,
                 'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character'
-            ),
+            )
+            .min(8, 'Password must be at least 8 characters long'),
         confirmPassword: yup
             .string()
             .oneOf([yup.ref('password'), null], 'Passwords must match')
@@ -38,8 +42,8 @@ const ResetPassword = () => {
 
     const onSubmit = async (data) => {
         const payload = {
-            email: data?.password,
-            email: data?.confirmPassword,
+            password: data?.password,
+            confirmPassword: data?.confirmPassword,
         };
         dispatch(resetPassword({ payload, successCallBack: () => navigate('/') }));
     };
@@ -74,7 +78,7 @@ const ResetPassword = () => {
                     />
 
                     <Button type={'submit'} className={'bg-primary text-white mt-8'} >
-                        Reset password
+                        {isLoading ? <Spinner /> : 'Reset Password'}
                     </Button>
 
                 </form>

@@ -47,7 +47,8 @@ export const resetPassword = createAsyncThunk(
         toast.success(response.message);
         successCallBack(response);
         return response;
-      } else {
+      }
+      else {
         return toast.error(response.message);
       }
     } catch (error) {
@@ -124,6 +125,8 @@ export const signUp = createAsyncThunk(
         successCallBack(response);
         toast.success('Registered successfully');
         return response;
+      } else if (response.message === 'Duplicate field email. Please use another value') {
+        return toast.warn('Email already exists. Please use another email address.');
       } else {
         return toast.error(response.message);
       }

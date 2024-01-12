@@ -44,7 +44,7 @@ const OTPInput = ({ onChange }) => {
         const pastedDigits = pastedData.match(/\d/g);
 
         if (pastedDigits && pastedDigits.length === 6) {
-            newOtp = pastedDigits.slice(0, 6);
+            let newOtp = pastedDigits.slice(0, 6);
             setOtp(newOtp);
 
             inputRefs.current[5].current.focus();

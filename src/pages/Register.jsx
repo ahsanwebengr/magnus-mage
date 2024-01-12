@@ -24,7 +24,7 @@ const Register = () => {
       .required('Name is required'),
     email: yup
       .string()
-      .email('Invalid email')
+      .email('Invalid email Pattern')
       .required('Email is required'),
     password: yup
       .string()
@@ -32,7 +32,8 @@ const Register = () => {
       .matches(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/,
         'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character'
-      ),
+      )
+      .min(8, 'Password must be at least 8 characters long'),
     confirmPassword: yup
       .string()
       .oneOf([yup.ref('password'), null], 'Passwords must match')
@@ -131,7 +132,7 @@ const Register = () => {
             </div>
             <p
               className="font-normal text-md text-primary-color">
-              Have an account yet? 
+              Have an account yet?
               <Link to={'/'} className="text-primary-light font-semibold hover:underline">
                 Login</Link> </p>
           </form>
